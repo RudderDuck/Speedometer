@@ -10,7 +10,9 @@ import "content"
 MainView {
     // objectName for functional testing purposes (autopilot-qt5)
     objectName: "mainView"
-
+    Label {
+        text: i18n.tr('Version 0.2')
+    }
     // Note! applicationName needs to match the "name" field of the click manifest
     applicationName: "com.ubuntu.developer.rudderduck.speedometer"
     property real factor : 3.6
@@ -52,7 +54,7 @@ MainView {
             Text {
                 //text: geoposition.position.coordinate.altitude
                 //text: geoposition.position.speedValid
-                text: geoposition.position.speedValid===false ? 0 : geoposition.position.speed*factor
+                //text: geoposition.position.speedValid===false ? 0 : geoposition.position.speed*factor
                 //text: "Altitude: " + Math.round( geoposition.position.coordinate.altitude )
                 //text: printablePositionMethod(geoposition.positioningMethod)
                 font.family: "Helvetica"
@@ -62,6 +64,7 @@ MainView {
 
 
         }
+
         QuitButton {
             anchors.right: parent.right
             anchors.top: parent.top

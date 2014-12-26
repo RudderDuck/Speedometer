@@ -38,7 +38,7 @@ MainView {
                 //value: slider.x * 100 / (container.width - 34)
                 //value: 0
                 //Math.round( geoposition.position.coordinate.altitude )
-                value: geoposition.position.speedValid===true ? 0 : geoposition.position.speed*factor
+                value: geoposition.position.speedValid===false ? 0 : geoposition.position.speed*factor
                 //value: geoposition.position===-1 ? 0 : 100*5/6
             }
             //! [the dial in use]
@@ -46,13 +46,13 @@ MainView {
             PositionSource {
                 id: geoposition
                 active: true
-                updateInterval: 1000
+                updateInterval: 500
             }
 
             Text {
                 //text: geoposition.position.coordinate.altitude
                 //text: geoposition.position.speedValid
-                text: geoposition.position===-1 ? "-" : "Speed: " + factor //Math.round( geoposition.position.speed ) + " m/s"
+                text: geoposition.position.speedValid===false ? 0 : geoposition.position.speed*factor
                 //text: "Altitude: " + Math.round( geoposition.position.coordinate.altitude )
                 //text: printablePositionMethod(geoposition.positioningMethod)
                 font.family: "Helvetica"

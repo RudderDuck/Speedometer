@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=Speedometer
+Exec=qmlscene $@ main.qml
+Icon=Speedometer.png
+Terminal=false
+Type=Application
+X-Ubuntu-Touch=true
+
+Name[en_US]=Speedometer

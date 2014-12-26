@@ -1,0 +1,17 @@
+{
+    "name": "com.ubuntu.developer.rudderduck.speedometer",
+    "description": "Speedometer, displaying the current speed using the GPS positioning method.",
+    "architecture": "all",
+    "title": "Speedometer",
+    "hooks": {
+        "Speedometer": {
+            "apparmor": "Speedometer.json",
+            "desktop": "Speedometer.desktop"
+        }
+    },
+    "version": "0.1",
+    "maintainer": "Rudder Duck <rudderduck@xs4all.nl>",
+    "framework" : "ubuntu-sdk-14.10"
+}
+
+

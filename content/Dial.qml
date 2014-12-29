@@ -43,44 +43,43 @@ import QtQuick 2.0
 Item {
     id: root
     property int value : 0
-
-    width: 210*4; height: 210*4
-
-    Image { source: "background.png" }
-
-//! [needle_shadow]
+    property int metric: 1
+    width: 766; height: 766
+    // Background with bezel, plate, numbers and markers
     Image {
-        x: 96*4
-        y: 35*4
+        source: "background.png"
+    }
+
+    // Shadow of the needle
+    Image {
         source: "needle_shadow.png"
         transform: Rotation {
-            origin.x: 9*4; origin.y: 67*4
+            origin.x: 383; origin.y: 383
             angle: needleRotation.angle
         }
     }
-//! [needle_shadow]
-//! [needle]
+
+    // Needle with a glow effect
     Image {
         id: needle
-        x: 98*4; y: 33*4
         antialiasing: true
         source: "needle.png"
         transform: Rotation {
             id: needleRotation
-            origin.x: 5*4; origin.y: 65*4
-            //! [needle angle]
-            angle: Math.min(Math.max(-130, root.value*2.6 - 130), 133)
+            origin.x: 383; origin.y: 383
+            angle: (root.value - 110) / 110 * 135
             Behavior on angle {
                 SpringAnimation {
                     spring: 1.4
                     damping: .15
                 }
             }
-            //! [needle angle]
         }
     }
-//! [needle]
-//! [overlay]
-    Image { x: 21*4; y: 18*4; source: "overlay.png" }
-//! [overlay]
+
+    // Overlay with needle cover, reflection effect and units depending on user selection
+    Image {
+        id: squiggle
+        source: metric===1 ? "overlay.png" : "overlay_imperial.png"
+    }
 }

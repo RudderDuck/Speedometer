@@ -1,88 +1,84 @@
 import QtQuick 2.2
 import Ubuntu.Components 1.1
 import QtPositioning 5.2
-import QtSensors 5.2
+//import QtSensors 5.2
 import "content"
 
 /*!
-    \brief MainView with a Label and Button elements.
+    \brief MainView with a speedometer, some information and quit button.
 */
+
 MainView {
     // objectName for functional testing purposes (autopilot-qt5)
     objectName: "mainView"
-    Label {
-        text: i18n.tr('Version 0.2')
-    }
+    automaticOrientation: false // don't know how to get it to rotate properly
+    backgroundColor: "#545454"
+
     // Note! applicationName needs to match the "name" field of the click manifest
     applicationName: "com.ubuntu.developer.rudderduck.speedometer"
+    // factor for switching between metric and imperial (metric by default)
     property real factor : 3.6
     Page {
+        // Container rectangle
         Rectangle {
             id: rectangle
             anchors.centerIn: parent
-            color: "#545454"
-            width: 300; height: 300
 
-            function printablePositionMethod(method) {
-                var out = "source error";
-                if (method === PositionSource.SatellitePositioningMethod) out = "Satellite";
-                else if (method === PositionSource.NoPositioningMethod) out = "Not available";
-                else if (method === PositionSource.NonSatellitePositioningMethod) out = "Non-satellite";
-                else if (method === PositionSource.AllPositioningMethods) out = "All/multiple";
-                return out;
-            }
-
-            //! [the dial in use]
-            // Dial with a slider to adjust it
+            // Dial that gets updated according to the current speed
             Dial {
                 id: dial
                 anchors.centerIn: parent
-                //value: slider.x * 100 / (container.width - 34)
-                //value: 0
-                //Math.round( geoposition.position.coordinate.altitude )
                 value: geoposition.position.speedValid===false ? 0 : geoposition.position.speed*factor
-                //value: geoposition.position===-1 ? 0 : 100*5/6
+                metric: factor===3.6 ? 1 : 0
             }
-            //! [the dial in use]
-
-            PositionSource {
-                id: geoposition
-                active: true
-                updateInterval: 500
-            }
-
-            Text {
-                //text: geoposition.position.coordinate.altitude
-                //text: geoposition.position.speedValid
-                //text: geoposition.position.speedValid===false ? 0 : geoposition.position.speed*factor
-                //text: "Altitude: " + Math.round( geoposition.position.coordinate.altitude )
-                //text: printablePositionMethod(geoposition.positioningMethod)
-                font.family: "Helvetica"
-                font.pointSize: 24
-                color: "white"
-            }
-
-
         }
-
+        // Quit button in the top right corner
         QuitButton {
             anchors.right: parent.right
             anchors.top: parent.top
             anchors.margins: 10
         }
+        // Two toolbar buttons to switch between metric and imperial
         tools: ToolbarItems {
             ToolbarButton {
                 action: Action {
                     text: "Metric"
+                    // 1 m/s equals 3.6 km/h
                     onTriggered: factor = 3.6
                 }
             }
             ToolbarButton {
                 action: Action {
                     text: "Imperial"
+                    // 1 m/s equals 2.23694 mph
                     onTriggered: factor = 2.23694
                 }
             }
         }
+        // Information on current version
+        Text {
+            text: "Version 0.6"
+            anchors.left: parent.left
+            anchors.top: parent.top
+        }
+        // Information on timestamp latest (speed) reading
+        Text {
+            text: geoposition.position.timestamp ? geoposition.position.timestamp : '—'
+            anchors.left: parent.left
+            anchors.bottom: parent.bottom
+        }
+        // Information whether speed is valid or not
+        Text {
+            text: geoposition.position.speedValid ? "Speed valid" : 'Speed invalid'
+            anchors.right: parent.right
+            anchors.bottom: parent.bottom
+        }
+
+    }
+    // Device's current position
+    PositionSource {
+        id: geoposition
+        active: true
+        updateInterval: 1000
     }
 }

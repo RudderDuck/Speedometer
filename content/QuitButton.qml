@@ -39,6 +39,8 @@
 ****************************************************************************/
 
 import QtQuick 2.0
+
+// Quit button (car start/stop button found on http://publicdomainvectors.org)
 Image {
     source: "quit.png"
     scale: quitMouse.pressed ? 0.8 : 1.0

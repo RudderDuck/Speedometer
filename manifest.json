@@ -5,11 +5,11 @@
     "title": "Speedometer",
     "hooks": {
         "Speedometer": {
-            "apparmor": "Speedometer.json",
+            "apparmor": "app.apparmor",
             "desktop": "Speedometer.desktop"
         }
     },
-    "version": "0.2",
+    "version": "0.6",
     "maintainer": "Rudder Duck <rudderduck@xs4all.nl>",
     "framework": "ubuntu-sdk-14.10"
 }

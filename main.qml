@@ -18,6 +18,7 @@ MainView {
     applicationName: "com.ubuntu.developer.rudderduck.speedometer"
     // factor for switching between metric and imperial (metric by default)
     property real factor : 3.6
+    property int valid: 0
     Page {
         // Container rectangle
         Rectangle {
@@ -30,6 +31,7 @@ MainView {
                 anchors.centerIn: parent
                 value: geoposition.position.speedValid===false ? 0 : geoposition.position.speed*factor
                 metric: factor===3.6 ? 1 : 0
+                valid: (new Date()-geoposition.position.timestamp)<=1500 ? 1 : 0
             }
         }
         // Quit button in the top right corner
@@ -57,21 +59,27 @@ MainView {
         }
         // Information on current version
         Text {
-            text: "Version 0.6"
+            text: "Version 0.7"
             anchors.left: parent.left
             anchors.top: parent.top
+            color: "white"
         }
         // Information on timestamp latest (speed) reading
         Text {
             text: geoposition.position.timestamp ? geoposition.position.timestamp : '—'
             anchors.left: parent.left
             anchors.bottom: parent.bottom
+            color: "white"
         }
         // Information whether speed is valid or not
         Text {
-            text: geoposition.position.speedValid ? "Speed valid" : 'Speed invalid'
+            //text: geoposition.position.speedValid ? "Speed valid" : 'Speed invalid'
+            text: (new Date()-geoposition.position.timestamp)<=1500 ? "Speed valid" : 'Speed invalid'
+            //text: new Date()-geoposition.position.timestamp
+            //text: Qt.formatDateTime(new Date(), "yyMMdd")
             anchors.right: parent.right
             anchors.bottom: parent.bottom
+            color: "white"
         }
 
     }

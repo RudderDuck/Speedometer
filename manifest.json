@@ -9,7 +9,7 @@
             "desktop": "Speedometer.desktop"
         }
     },
-    "version": "0.6",
+    "version": "0.7",
     "maintainer": "Rudder Duck <rudderduck@xs4all.nl>",
     "framework": "ubuntu-sdk-14.10"
 }

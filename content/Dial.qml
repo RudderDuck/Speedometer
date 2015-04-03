@@ -44,6 +44,7 @@ Item {
     id: root
     property int value : 0
     property int metric: 1
+    property int valid: 0
     width: 766; height: 766
     // Background with bezel, plate, numbers and markers
     Image {
@@ -63,6 +64,7 @@ Item {
     Image {
         id: needle
         antialiasing: true
+        visible: valid===1 ? true : false
         source: "needle.png"
         transform: Rotation {
             id: needleRotation
